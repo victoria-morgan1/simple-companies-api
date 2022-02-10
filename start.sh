@@ -1,4 +1,4 @@
 #!/bin/bash
-APP_DIR=$(dirname “$0”)
+APP_DIR=$(dirname "$0")
 PORT=8080
-exec java ${JAVA_MEM_ARGS} -jar -Dserver.port=“${PORT}” “target/companies-0.0.1.jar”
+java -Dserver.port="${PORT}" -jar "${APP_DIR}/target/companies-0.0.1.jar"
