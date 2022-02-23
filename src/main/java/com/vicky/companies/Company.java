@@ -2,9 +2,13 @@ package com.vicky.companies;
 
 public class Company {
 
-    private final long id;
-    private final String companyNumber;
-    private final String companyName;
+    private  long id;
+    private  String companyNumber;
+    private  String companyName;
+
+    public Company (){
+
+    }
 
     public Company(long id, String companyNumber, String companyName) {
         this.id = id;
