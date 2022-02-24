@@ -2,21 +2,41 @@ package com.vicky.companies;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class CompaniesControllerTest {
+    @InjectMocks
     private CompaniesController companiesController;
+
+    @Mock
+    private CompaniesService companiesService;
+
+    private Company company;
+
+    private List<Company> companies;
 
     @BeforeEach
     void setupTests(){
-        companiesController = new CompaniesController();
+        company = new Company(1L, "7658990", "Barber");
+        Company two = new Company (2l, "SC1010", "Hairdressers");
+        companies = new ArrayList<Company>();
+        companies.add(company);
+        companies.add(two);
     }
 
     @Test
     void testGetCompanySuccess(){
+        when(companiesService.getComapany(1L)).thenReturn(company);
         long expectedId = 1l;
 
         long actualId = companiesController.getComapny(1L).getId();
@@ -26,6 +46,7 @@ public class CompaniesControllerTest {
 
     @Test
     void testGetCompaniesSuccess(){
+        when(companiesService.getCompanies()).thenReturn(companies);
         long expectedId = 1L;
         long expectedId2 = 2L;
 
@@ -41,9 +62,10 @@ public class CompaniesControllerTest {
     @Test
     void testPostRequestCreatesCompanySuccess(){
 
-        Company expected = new Company(1L, "987066", "Test company");
+        Company expected = new Company(1L, "7658990", "Barber");
+        when(companiesService.createCompany(company)).thenReturn(company);
 
-        Company actual = companiesController.createCompany(new Company(1L, "987066", "Test company"));
+        Company actual = companiesController.createCompany(company);
 
         // Assert that the company in the post request is the company returned by the method
         assertEquals(expected.getId(), actual.getId());
