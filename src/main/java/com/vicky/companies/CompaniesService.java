@@ -21,7 +21,16 @@ public class CompaniesService {
         return companies;
     }
 
-    public Company createCompany(Company company){
+    public Company createCompany(NewCompany newCompany){
+        Company company = new Company (newCompany);
+        
+        return company;
+    }
+
+
+    public Company updateCompany(long companyId, NewCompany newCompany){
+        Company company = new Company (companyId, newCompany.getCompanyNumber(), newCompany.getCompanyName());
+
         return company;
     }
 }

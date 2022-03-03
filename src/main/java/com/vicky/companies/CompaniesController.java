@@ -31,8 +31,15 @@ public class CompaniesController {
 
     @PostMapping("/create-company")
     @ResponseStatus(HttpStatus.CREATED)
-    public Company createCompany(@RequestBody Company company){
+    public Company createCompany(@RequestBody NewCompany newCompany){
         System.out.println("Processing Post request to create Company");
-        return companiesService.createCompany(company);
+        return companiesService.createCompany(newCompany);
+    }
+
+    @PutMapping("/companies/{id}")
+    Company replaceEmployee(@RequestBody NewCompany updatedCompany, @PathVariable("id") Long companyId) {
+        System.out.println("Processing update company create ID" +companyId);
+
+        return companiesService.updateCompany(companyId, updatedCompany);
     }
 }

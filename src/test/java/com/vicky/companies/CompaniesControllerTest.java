@@ -62,15 +62,18 @@ public class CompaniesControllerTest {
     @Test
     void testPostRequestCreatesCompanySuccess(){
 
-        Company expected = new Company(1L, "7658990", "Barber");
-        when(companiesService.createCompany(company)).thenReturn(company);
+        NewCompany newCompany = new NewCompany("Barber","7658990");
+        Company company = new Company(1L,"7658990","Barber");
+        when(companiesService.createCompany(newCompany)).thenReturn(company);
 
-        Company actual = companiesController.createCompany(company);
+        Company actual = companiesController.createCompany(newCompany);
 
         // Assert that the company in the post request is the company returned by the method
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getCompanyNumber(), actual.getCompanyNumber());
-        assertEquals(expected.getCompanyName(), actual.getCompanyName());
+        assertEquals(company.getId(), actual.getId());
+        assertEquals(company.getCompanyNumber(), actual.getCompanyNumber());
+        assertEquals(company.getCompanyName(), actual.getCompanyName());
 
     }
+
+
 }
