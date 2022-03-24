@@ -16,8 +16,8 @@ public class CompaniesController {
     public CompaniesController(CompaniesService companiesService){
         this.companiesService = companiesService;
     }
-    @GetMapping("/company/{id}")
-    public Company getComapny(@PathVariable long id){
+    @GetMapping("/companies/{id}")
+    public Company getCompany(@PathVariable String id){
         System.out.println("Processing Get Company REST request");
         return companiesService.getComapany(id);
 
@@ -37,9 +37,16 @@ public class CompaniesController {
     }
 
     @PutMapping("/companies/{id}")
-    Company replaceEmployee(@RequestBody NewCompany updatedCompany, @PathVariable("id") Long companyId) {
+    Company updateCompany(@RequestBody NewCompany updatedCompany, @PathVariable("id") String companyId) {
         System.out.println("Processing update company create ID" +companyId);
 
         return companiesService.updateCompany(companyId, updatedCompany);
+    }
+
+    @DeleteMapping("/companies/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCompany(@PathVariable String id) {
+        System.out.println("Processing Get Company REST request");
+        companiesService.deleteCompany(id);
     }
 }

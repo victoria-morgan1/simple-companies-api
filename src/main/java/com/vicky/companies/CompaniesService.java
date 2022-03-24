@@ -1,5 +1,6 @@
 package com.vicky.companies;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,30 +8,37 @@ import java.util.List;
 
 @Service
 public class CompaniesService {
-    public Company getComapany(long id){
-        return new Company(id, "SC1006", "MyHaggis LTY");
+
+    private final CompanyRepository companyRepository;
+
+    @Autowired
+    public CompaniesService(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
+
+    public Company getComapany(String id){
+        return companyRepository.findById(id).get();
     }
 
     public List<Company> getCompanies(){
-        Company one = new Company(1l, "SC1006", "MyHaggis LTY");
-        Company two = new Company (2l, "SC1010", "Hairdressers");
-        List <Company> companies = new ArrayList<Company>();
-        companies.add(one);
-        companies.add(two);
-
-        return companies;
+        return companyRepository.findAll();
     }
 
     public Company createCompany(NewCompany newCompany){
         Company company = new Company (newCompany);
-        
+        companyRepository.save(company);
         return company;
     }
 
 
-    public Company updateCompany(long companyId, NewCompany newCompany){
+    public Company updateCompany(String companyId, NewCompany newCompany){
         Company company = new Company (companyId, newCompany.getCompanyNumber(), newCompany.getCompanyName());
-
+        companyRepository.save(company);
         return company;
     }
+
+    public void deleteCompany(String companyId){
+        companyRepository.deleteById(companyId);
+    }
+
 }
